@@ -3,18 +3,21 @@ import { bookings } from '../fixtures/bookingData';
 import { BookingPage } from '../pages/bookingPage';
 import { HomePage } from '../pages/homePage';
 
-test('homepage has title', async ({ page }) => {
-    const homePage = new HomePage(page);
+let homePage: HomePage;
+let bookingPage: BookingPage;
 
-    await homePage.navigate();
-    await expect(page).toHaveTitle("Restful-booker-platform demo");
+test.beforeEach(async ({ page }) => {
+  homePage = new HomePage(page);
+  bookingPage = new BookingPage(page);
+});
+
+test('homepage has title', async () => {
+  await homePage.navigate();
+  await expect(homePage.page).toHaveTitle("Restful-booker-platform demo");
 });
 
 for (const b of bookings) {
-  test(`Booking for ${b.first} ${b.last}`, async ({ page }) => {
-    const homePage = new HomePage(page);
-    const bookingPage = new BookingPage(page);
-    
+  test(`Booking for ${b.first} ${b.last}`, async () => {
     await homePage.navigate();
     await homePage.selectFirstRoom();
     await bookingPage.clicklDoAReservation();

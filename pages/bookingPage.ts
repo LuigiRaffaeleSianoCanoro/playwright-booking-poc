@@ -1,4 +1,5 @@
 import { Page, Locator } from '@playwright/test';
+import { expect } from '@playwright/test';
 
 export class BookingPage {
   readonly page: Page;
@@ -22,7 +23,7 @@ export class BookingPage {
   }
 
   async clicklDoAReservation() {
-    await this.page.locator('#doReservation').click();
+    await this.doAReservationButton.click();
   }
 
   async fillBookingForm(first: string, last: string, email: string, phone: string) {
@@ -37,6 +38,6 @@ export class BookingPage {
   }
 
   async verifyBookingConfirmed() {
-    await this.bookingConfirmedHeading.waitFor({ state: 'visible' });
+    await expect(this.bookingConfirmedHeading).toBeVisible();
   }
 }
